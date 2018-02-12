@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html ng-app="hmisPortal" ng-controller="mainCtrl">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+
+	<title>Health Management Information System - Web Portal</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="style/bootstrap.css" media="all" type="text/css" />
+	<link rel="stylesheet" href="style/css.css" media="all" type="text/css" />
+	<link rel="stylesheet" href="style/style.css" media="all" type="text/css" />
+	<link rel="stylesheet" href="style/jqx.base.css" type="text/css" />
+	<link rel="stylesheet" href="style/leaflet.css">
+</head>
+<body class="page-header-fixed bg-1">
+    <!-- Navigation -->
+	<div class="navbar navbar-fixed-top scroll-hide" style="overflow: visible;">
+		<div class="container-fluid top-bar">
+			<button class="navbar-toggle">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<span class="logo"><img src="images/gon_logo.jpe" height="30" style="margin-top:-2px;"/>
+			Health Management Information System - Web Portal</span>
+			<div class="pull-right">
+				<img src="images/nepal_flag.gif" height="30" style="margin-top:6px;"/>
+			</div>
+		</div>
+
+		<div class="container-fluid main-nav clearfix">
+			<div class="nav-collapse">
+				<ul class="nav">
+					<li>
+						<a class="current" href="./index.html#/home"><i class="fa fa-home"></i> Home</a>
+					</li>
+					<li class="dropdown">
+						<a data-toggle="dropdown" href=""><i class="fa fa-home"></i> HMIS Indicators<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="./index.html#">Indicator 1</a></li>
+							<li><a href="./index.html#">Indicator 2</a></li>
+							<li><a href="./index.html#">Indicator 3</a></li>
+							<li><a href="./index.html#">Indicator 4</a></li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a data-toggle="dropdown" href=""><i class="fa fa-home"></i> Program Indicators<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="./index.html#/malaria">Malaria</a></li>
+							<li><a href="./index.html#/tuberculosis">Tuberculosis</a></li>
+							<li><a href="./index.html#/leprosy">Leprosy</a></li>
+							<li><a href="./index.html#/kalaazar">Kala Azar</a></li>
+						</ul>
+					</li>
+					<li><a href="./index.html#/news"><i class="fa fa-home"></i> News &amp; Events</a></li>
+				</ul>
+			</div>
+        </div>
+
+		<div class="container-fluid main-nav clearfix" style="border-top:1px solid #ececec;text-align:center;opacity:0.5;background:rgba(255, 255, 255, 0.95);padding:10px 0;font-size:12px">
+			<div class="row">
+				<div class="col-lg-12">
+					<!--Disaggregate by:
+					<select name="disaggregate" ng-model="disaggregateBy" style="height:33px;">
+						<option value="period" selected>Period</option>
+						<option value="ou">Organization Unit</option>
+					</select>&nbsp;&nbsp;&nbsp;&nbsp;-->
+					Year:
+					<select name="fy" ng-model="selectedPe" style="height:33px;">
+						<option value="2073/2074" selected="selected">2073/2074</option>
+						<option value="2072/2073">2072/2073</option>
+						<option value="2071/2072">2071/2072</option>
+					</select>&nbsp;&nbsp;&nbsp;&nbsp;
+					Province:
+					<select name="ou" ng-model="selectedOu" style="height:33px;">
+						<option value="national" selected="selected">National(National)</option>
+						<option value="province">National(By Province)</option>
+						<option value="RVc3XoVoNRf">Province 1</option>
+						<option value="a6W190BanBu">Province 2</option>
+						<option value="hi16ZuHEWaY">Province 3</option>
+						<option value="GvgqqErqwFP">Province 4</option>
+						<option value="Zx3boDXh1Q5">Province 5</option>
+						<option value="fvN7GZvNAOB">Province 6</option>
+						<option value="wtU6v09Kbe0">Province 7</option>
+					</select>&nbsp;&nbsp;&nbsp;&nbsp;
+					<span ng-if="selectedOu != 'national' && selectedOu != 'province'">Palika:
+					<select id="palika" name="palika" ng-model="palika" style="height:33px;">
+						<option ng-repeat="palika in palikaList" value="{{palika.id}}">{{palika.name}}</option>
+					</select>
+					</span>
+
+					<button class="btn btn-primary update-btn" ng-click="update()" style="margin-top:2px;margin-left:15px;">Update</button>
+				</div>
+			</div>
+		</div>
+    </div>
+    <!-- End Navigation -->
+
+	<div class="container-fluid main-content" style="height:70px;"></div>
+
+	<style>
+		.chart-type{font-size:16px;margin-right:3px;cursor:pointer;}
+		.chart-type img{box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);border-radius:16px;}
+		.chart-type img:hover{box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);}
+		.table, .data-table{width:100%}
+		.table th{font-weight:bold;font-size:11px;text-align:center;background:#efefef;border:1px solid #efefef;color:#000;}
+		.table td{font-size:11px;border:1px solid #efefef;color:#000;}
+		.mapDiv{height:250px;background:#fff;border:1px solid #efefef;}
+		.leaflet-control-attribution{background:#efefef}
+		.info div {background:#000;color:#fff;border-radius:4px;padding:3px;}
+		.update-btn:hover{background:lightgreen;border:1px solid green}
+		.legend{padding:5px;border:1px solid #ececec;box-shadow:0 1px 5px rgba(0,0,0,0.65);background:rgba(255,255,255,0.95);border-radius:4px;}
+	</style>
+
+	<div ng-if="showLoader" style="width:100%;text-align:center;margin:30px;">
+		<img src="images/spinner.gif" style="border:1px solid #efefef;border-radius:30px;box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);"/>
+	</div>
+
+	<div ng-if="!showLoader" ng-view></div>
+
+	<div class="container-fluid main-content">
+		<div class="container-fluid clearfix footer" style="margin-top:20px;background:#ccc">
+			<div style="padding:10px 20px;"><a href="#">HMIS</a></div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src='lib/pace.js'></script>
+	<script type="text/javascript" src="lib/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="lib/jquery-ui-1.10.4.custom.js"></script>
+	<script type="text/javascript" src="lib/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="lib/angular.min.js"></script>
+	<script type="text/javascript" src="lib/angular-route.js"></script>
+	<script type="text/javascript" src="lib/angular-resource.js"></script>
+
+	<script type="text/javascript" src="lib/angular-animate.min.js"></script>
+	<script type="text/javascript" src="lib/angular-sanitize.min.js"></script>
+	<script type="text/javascript" src="lib/angular-datatables.min.js"></script>
+	<script type="text/javascript" src="lib/angular-materialize.js"></script>
+	<script type="text/javascript" src="lib/angular-sanitize.min.js"></script>
+	<script type="text/javascript" src="lib/leaflet.js"></script>
+
+	<script type="text/javascript" src="app.js"></script>
+
+	<script type="text/javascript" src="data/data.js"></script>
+
+	<script type="text/javascript" src="controllers/mainCtrl.js"></script>
+	<script type="text/javascript" src="controllers/dashboardCtrl.js"></script>
+	<script type="text/javascript" src="services/portalService.js"></script>
+
+	<script type="text/javascript" src="lib/bootstrap.js"></script>
+	<script type="text/javascript" src="lib/main.js"></script>
+
+	<!-- jqx lib -->
+	<script type="text/javascript" src="lib/jqxchart/jqxcore.js"></script>
+	<script type="text/javascript" src="lib/jqxchart/jqxdata.js"></script>
+	<script type="text/javascript" src="lib/jqxchart/jqxdraw.js"></script>
+	<script type="text/javascript" src="lib/jqxchart/jqxchart.core.js"></script>
+</body>
+</html>

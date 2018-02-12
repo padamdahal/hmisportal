@@ -1,0 +1,15 @@
+menuText,subMenuText,itemName,itemId,dx,dxDescription,visType
+Home,home,ado_pop_10_19,ado_pop_10_19,U0zgcDnh8XN,Adolescent population aged 10-19 years,column
+Home,home,cpr,cpr,r7jZ8Tm8r7M;eCs6LPhn82C,Contraceptive prevalence rate (CPR),column
+Home,home,women_direct_obs_comp,women_direct_obs_comp,SKiiNBRrGIF,Estimated no. of women with a direct obstetric complication,column
+Home,home,married_f_15_49,married_f_15_49,xtAxxbdo7it,Married Female population aged 15-49 years,column
+HMIS Indicators,Safe Motherhood,maternal_mortality,maternal_mortality,LB5svG6huvM,"Maternal mortality ratio per 100,000 live births",column
+HMIS Indicators,Safe Motherhood,percent_inst_deliveries,percent_inst_deliveries,nFRulByeHnY,Percentage of institutional deliveries,line
+Program Indicators,Malaria,m_r_both_positive,m_r_both_positive,sb4e9ccVZEZ,Malaria-Diagnosis & Result-Both (M+R) +ve Result,column
+Program Indicators,Malaria,confirm_severe,confirm_severe,caoSOYTdXtP,Malaria-Confirmed Severe Cases,column
+Program Indicators,Tuberculosis,hiv_status,hiv_status,IHugkBgrKm3;lgh5MRNjlAP,HIV status at registration,map
+Program Indicators,Tuberculosis,new_cases,new_cases,fEqA4AtMjJL;wn7uqOYMdca,New Cases,column
+Program Indicators,Tuberculosis,pbc_new_contract_tracing,pbc_new_contract_tracing,hTkfYSIMDFg,TB Patients-Diagnosed by Contact Tracing-PBC(New),column
+Program Indicators,Tuberculosis,new_cases_by_sex,new_cases_by_sex,fEqA4AtMjJL.ye1QuAMRG5Z;fEqA4AtMjJL.PflKpozpO7b,New PBC cases by sex,column
+Others,Reporting Rates,imm_reporting_rate,imm_reporting_rate,padSuQDK1pQ.REPORTING_RATE,Immunization data set reporting rate,column
+Others,Reporting Rates,cbimci_reporting_rate,cbimci_reporting_rate,m0o0VnXLFDM.REPORTING_RATE,CBIMCI data set reporting rate,column
